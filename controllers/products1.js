@@ -98,3 +98,6 @@ module.exports = {getAllProducts, getAllProductsTesting}
 // req.boby - Generally used in POST/PUT requests.
 // req.param - These are properties attached to the url i.e named route parameters
 // req.query req.query is mostly used for searching,sorting, filtering, pagination, e.t.c
+
+
+// gh new repo
