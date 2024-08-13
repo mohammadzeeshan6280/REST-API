@@ -1,10 +1,14 @@
 const Product = require("../models/products")
 
 const getAllProducts = async (req, res) => {
+// Add Filtration & Searching Functionality with Query Props
+
     // const myData = await Product.find({});
     // const myData = await Product.find({name : "iphone"});
-
+    
     // const { company} = req.query;
+
+// Add Company Filter in API & Make API Work Better
     const { company, name, featured, sort, select } = req.query;
     const queryObject = {};
 
@@ -18,6 +22,7 @@ const getAllProducts = async (req, res) => {
         queryObject.featured = featured;
     }
 
+    //  Add Advance Search Functionality in our Rest API
     if(name){
         // queryObject.name = name;
         queryObject.name = { $regex : name, $options: "i"};
@@ -25,6 +30,7 @@ const getAllProducts = async (req, res) => {
 
     let apiData = Product.find(queryObject);
 
+    //  Add SORT functionality in Rest API (ASC TO DESC, LOW TO HIGH)
     if(sort){
         // let sortFix = sort.replace(",", " ");
         let sortFix = sort.split(",").join( " ");;
@@ -32,6 +38,7 @@ const getAllProducts = async (req, res) => {
         apiData = apiData.sort(sortFix)
     }
 
+    //  Return Specific Document Fields using SELECT in Mongoose
     if(select){
         // let selectFix = select.replace(",", " ");
         let selectFix = select.split(",").join( " ");
@@ -39,7 +46,8 @@ const getAllProducts = async (req, res) => {
     }
     // (select = name), company;
 
-    // Pagination
+
+    // Add Pagination in Rest API using Node & Mongoose
     let page = Number(req.query.page) || 1; // limit for page default 1
     let limit = Number(req.query.limit) || 3; // limit for page 3
     let skip = (page - 1) * limit;
@@ -47,9 +55,9 @@ const getAllProducts = async (req, res) => {
     // page = 2;
     // limit = 3;
     // skip = 1 * 3 = 3
-    // apiData = apiData.skip(skip).limit(limit);
-    
-    apiData = apiData.skip(3).limit(3);
+
+    apiData = apiData.skip(skip).limit(limit);
+    // apiData = apiData.skip(3).limit(3);
 
 
 
@@ -89,6 +97,11 @@ const getAllProductsTesting = async (req, res) => {
 }
 
 module.exports = {getAllProducts, getAllProductsTesting}
+
+
+
+
+
 
 
 // http://localhost:3000/api/products/testing?company=samsung

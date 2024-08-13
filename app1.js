@@ -2,7 +2,7 @@ const express = require("express")
 const app = express()
 const port = process.env.PORT || 3000;
 
-// Route Require
+// Router Route Require
 const products_route = require("./routes/products")
 
 
